@@ -1,0 +1,36 @@
+batch_size_train: 4
+num_workers: 23
+path_to_dataset: /home/samuelebumbaca/repositories/Paper2/agri-dowstream/src/object_detection_agrinet/dataset
+shuffle_train: true
+split: /home/samuelebumbaca/repositories/Paper2/agri-dowstream/src/object_detection_agrinet/config/split.yaml
+test_split: 0.25
+train_split: 0.5
+val_split: 0.25
+dataset:
+  bboxes_path: /mnt/e/PhD/Paper2/experiments/Faster_RCNN_TPN_SAGIT22_C_4175_2022_05_27/Handcrafted_dataset/bboxes.csv
+  binarization_method: HSV
+  date: '2022_05_27'
+  dist_tolerance: 0.03
+  inter_row_distance: 0.75
+  load_orthomosaic: false
+  max_dist_on_row: 0.18
+  min_dist_on_row: 0.12
+  path_to_dataset: /mnt/e/PhD/Paper2/dataset/
+  resolution: 0.005
+  image_size: 224
+  trial: SAGIT22_C_4175
+experiment:
+  id: Faster_RCNN_TPN_SAGIT22_C_4175_2022_05_27
+  seed: 132
+git_commit_version: unknown
+train:
+  n_gpus: 1
+  backbone: default
+  backbone_weights: path/to/custom_resnet50_weights.ckpt
+  model: faster_rcnn
+  experiment_id: Faster_RCNN_TPN_SAGIT22_C_4175_2022_05_27
+  max_epoch: 50
+  use_pretrained: true
+  num_classes: 2
+  optimizer:
+    type: adam

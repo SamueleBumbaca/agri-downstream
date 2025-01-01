@@ -1,0 +1,6 @@
+train_split: 0.5
+val_split: 0.25
+test_split: 0.25
+train_dataset_path: /mnt/e/PhD/Paper2/dataset/train/
+val_dataset_path: /mnt/e/PhD/Paper2/dataset/val/
+test_dataset_path: /mnt/e/PhD/Paper2/dataset/test/
