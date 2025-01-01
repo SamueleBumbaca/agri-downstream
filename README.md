@@ -1,7 +1,7 @@
-# Project Title: Agri-Dowstream Object Detection
+# Project Title: Agri-Downstream Object Detection
 
 ## Overview
-The Agri-Dowstream project focuses on implementing object detection techniques using the Faster R-CNN model. This repository contains the necessary configurations, datasets, and scripts to train and evaluate the model on agricultural datasets.
+The Agri-Downstream project focuses on implementing object detection techniques using the Faster R-CNN model. This repository contains the necessary configurations, datasets, and scripts to train and evaluate the model on agricultural datasets.
 
 ## Project Structure
 ```
