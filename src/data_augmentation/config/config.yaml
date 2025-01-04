@@ -1,0 +1,11 @@
+image_dir: /mnt/e/PhD/Paper2/dataset/base
+bbox_file: /home/samuelebumbaca/repositories/Paper2/agri-downstream/experiments/Faster_RCNN_TPN_SAGIT22_C_4175_2022_05_27/Handcrafted_dataset/bboxes.csv
+output_dir: experiment/VAE_augmentation
+latent_dim: 2
+hidden_dim: 512
+experiment: VAE_augmentation_001
+handcrafted_config: /home/samuelebumbaca/repositories/Paper2/agri-downstream/src/object_detection_agrinet/config/experiment_config/config_Faster_RCNN_TPN_SAGIT22_C_4175_2022_05_27.yaml
+batch_size: 32
+learning_rate: 1e-3
+weight_decay: 1e-2
+num_epochs: 50

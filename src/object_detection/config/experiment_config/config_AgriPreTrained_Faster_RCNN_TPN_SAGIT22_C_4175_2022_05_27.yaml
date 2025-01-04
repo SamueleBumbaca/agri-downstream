@@ -1,0 +1,48 @@
+config_path: /home/samuelebumbaca/repositories/Paper2/agri-downstream/src/object_detection_agrinet/config/experiment_config/config_AgriPreTrained_Faster_RCNN_TPN_SAGIT22_C_4175_2022_05_27.yaml
+data:
+  batch_size_train: 4
+  num_workers: 23
+  path_to_dataset: /home/samuelebumbaca/repositories/Paper2/agri-downstream/dataset # E://PhD//Paper2//agri-dowstream//src//object_detection_agrinet//dataset
+  shuffle_train: true
+  split: /home/samuelebumbaca/repositories/Paper2/agri-downstream/src/object_detection/config/split.yaml # E://PhD//Paper2//agri-dowstream//src//object_detection_agrinet//config//split.yaml
+  test_split: 0.25
+  train_split: 0.5
+  val_split: 0.25
+dataset:
+  bboxes_path: /home/samuelebumbaca/repositories/Paper2/agri-downstream/experiments/Faster_RCNN_TPN_SAGIT22_C_4175_2022_05_27/Handcrafted_dataset/bboxes.csv # E://PhD//Paper2//experiments//Faster_RCNN_TPN_SAGIT22_C_4175_2022_05_27//Handcrafted_dataset//bboxes.csv
+  binarization_method: HSV
+  date: '2022_05_27'
+  dist_tolerance: 0.03
+  inter_row_distance: 0.75
+  load_orthomosaic: false
+  max_dist_on_row: 0.18
+  min_dist_on_row: 0.12
+  path_to_dataset: /mnt/e/PhD/Paper2/dataset/ # E://PhD//Paper2//dataset//
+  resolution: 0.005
+  image_size: 224
+  trial: SAGIT22_C_4175
+experiment:
+  id: AgriPreTrained_Faster_RCNN_TPN_SAGIT22_C_4175_2022_05_27
+  seed: 132
+git_commit_version: main
+train:
+  n_gpus: 1
+  backbone: custom
+  backbone_weights: /mnt/e/PhD/Paper2/experiments/barlow_twins_base_modified_train_batch_size_and_workers/lightning_logs/version_0/checkpoints/last.ckpt
+  model: faster_rcnn
+  experiment_id: AgriPreTrained_Faster_RCNN_TPN_SAGIT22_C_4175_2022_05_27
+  max_epoch: 50
+  use_pretrained: true  # Add this option to specify whether to use a pretrained backbone
+  num_classes: 2 # One class for the background and one for the object
+  optimizer:
+    type: adam
+    lr: 0.0001
+    momentum: 0.9
+    weight_decay: 0.0005
+  scheduler:
+    gamma: 0.1
+    milestones:
+    - 30
+    - 40
+  # train_backbone: true
+
