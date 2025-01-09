@@ -14,6 +14,7 @@ from object_detection.dataset.field_data_module import FieldDataModule
 from object_detection.models.faster_RCNN_FPN import MyFasterRCNN
 import click
 import time
+import json
 
 def load_config(config_path):
     with open(config_path, 'r') as file:
@@ -44,17 +45,48 @@ def format_predictions_and_targets(predictions, targets):
 
     formatted_targets = [
         {
+            'id': idx,  # Add unique ID for each target
             'image_id': i,
             'category_id': label.item(),
             'bbox': box.tolist(),
-            'area': (box[2] - box[0]) * (box[3] - box[1]),
+            'area': (box[2] - box[0]).item() * (box[3] - box[1]).item(),
             'iscrowd': 0
         }
-        for i, target in enumerate(targets)
+        for idx, (i, target) in enumerate(enumerate(targets))
         for box, label in zip(target['boxes'], target['labels'])
     ]
 
     return formatted_predictions, formatted_targets
+
+def save_annotations_to_json(predictions, targets, predictions_file, targets_file):
+    # Define categories (this should match your dataset's categories)
+    categories = [
+        {"id": 1, "name": "category_1"},
+        # Add more categories as needed
+    ]
+    
+    # Format predictions
+    image_ids = list(set([pred['image_id'] for pred in predictions]))
+    predictions_formatted = {
+        'images': [{'id': img_id} for img_id in image_ids],
+        'annotations': predictions,
+        'categories': categories
+    }
+    
+    # Format targets
+    target_image_ids = list(set([tgt['image_id'] for tgt in targets]))
+    targets_formatted = {
+        'images': [{'id': img_id} for img_id in target_image_ids],
+        'annotations': targets,
+        'categories': categories
+    }
+    
+    # Save to JSON files
+    with open(predictions_file, 'w') as f:
+        json.dump(predictions, f)
+    
+    with open(targets_file, 'w') as f:
+        json.dump(targets_formatted, f)
 
 def evaluate_model(model, dataloader):
     model.eval()
@@ -82,9 +114,12 @@ def evaluate_model(model, dataloader):
     return predictions, targets
 
 def calculate_metrics(predictions, targets):
-    # Convert predictions and targets to COCO format
-    coco_gt = COCO()
-    coco_dt = coco_gt.loadRes(predictions)
+    os.makedirs('temp', exist_ok=True)
+    # Save predictions and targets to JSON files
+    save_annotations_to_json(predictions, targets, 'temp/predictions.json', 'temp/targets.json')
+    # Load the annotations from the JSON files
+    coco_gt = COCO('temp/targets.json')
+    coco_dt = coco_gt.loadRes('temp/predictions.json')
     
     # Create COCOeval object
     coco_eval = COCOeval(coco_gt, coco_dt, iouType='bbox')
@@ -110,17 +145,10 @@ def calculate_metrics(predictions, targets):
         'AR_large': coco_eval.stats[11],  # AR @[ IoU=0.50:0.95 | area=large | maxDets=100 ]
     }
     
-    count_ground_truth = len(targets['boxes']) # Number of ground truth boxes
-    count_predictions = len(predictions['boxes']) # Number of predicted boxes
-
-    count_accuracy = 1 - np.abs(count_predictions / count_ground_truth - 1)
-
-    metrics['count_accuracy'] = count_accuracy
-    
     return metrics
 
 @click.command()
-@click.option('-c','--config', required=True, type=str, help='Path to the config file')
+@click.option('-cfg','--config', required=True, type=str, help='Path to the config file')
 @click.option('-ckpt','--checkpoint', required=True, type=str, help='Path to the checkpoint file')
 def main(config, checkpoint):
     config_path = config

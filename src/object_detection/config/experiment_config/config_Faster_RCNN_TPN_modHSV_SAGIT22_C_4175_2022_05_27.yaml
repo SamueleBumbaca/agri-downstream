@@ -1,15 +1,15 @@
-config_path: /home/samuelebumbaca/repositories/Paper2/agri-downstream/src/object_detection_agrinet/config/experiment_config/config_Faster_RCNN_TPN_SAGIT22_C_4175_2022_05_27.yaml # E://PhD//Paper2//agri-dowstream//src//object_detection_agrinet//config//config_Faster_RCNN_TPN_SAGIT22_C_4175_2022_05_27.yaml
+config_path: /home/samuelebumbaca/repositories/Paper2/agri-downstream/src/object_detection/config/experiment_config/config_Faster_RCNN_TPN_modHSV_SAGIT22_C_4175_2022_05_27.yaml # E://PhD//Paper2//agri-dowstream//src//object_detection_agrinet//config//config_Faster_RCNN_TPN_SAGIT22_C_4175_2022_05_27.yaml
 data:
-  batch_size_train: 8
+  batch_size_train: 4
   num_workers: 23 # set to 23 after profiling
   path_to_dataset: /home/samuelebumbaca/repositories/Paper2/agri-downstream/dataset # E://PhD//Paper2//agri-dowstream//src//object_detection_agrinet//dataset
   shuffle_train: true
-  split: /home/samuelebumbaca/repositories/Paper2/agri-downstream/src/object_detection/config/split.yaml # E://PhD//Paper2//agri-dowstream//src//object_detection_agrinet//config//split.yaml
-  test_split: 0.25
-  train_split: 0.5
-  val_split: 0.25
+  split: /home/samuelebumbaca/repositories/Paper2/agri-downstream/src/object_detection/config/split_train6val3test1.yaml # E://PhD//Paper2//agri-dowstream//src//object_detection_agrinet//config//split.yaml
+  test_split: 0.1
+  train_split: 0.6
+  val_split: 0.3
 dataset:
-  bboxes_path: /home/samuelebumbaca/repositories/Paper2/agri-downstream/experiments/Faster_RCNN_TPN_SAGIT22_C_4175_2022_05_27/Handcrafted_dataset/bboxes.csv # E://PhD//Paper2//experiments//Faster_RCNN_TPN_SAGIT22_C_4175_2022_05_27//Handcrafted_dataset//bboxes.csv
+  bboxes_path: /home/samuelebumbaca/repositories/Paper2/agri-downstream/experiments/Faster_RCNN_TPN_modHSV_SAGIT22_C_4175_2022_05_27/Handcrafted_dataset/bboxes.csv
   binarization_method: HSV
   date: '2022_05_27'
   dist_tolerance: 0.03
@@ -22,7 +22,7 @@ dataset:
   image_size: 224
   trial: SAGIT22_C_4175
 experiment:
-  id: Faster_RCNN_TPN_SAGIT22_C_4175_2022_05_27
+  id: Faster_RCNN_TPN_modHSV_SAGIT22_C_4175_2022_05_27
   seed: 132
 git_commit_version: main
 train:
@@ -30,7 +30,7 @@ train:
   backbone: default
   backbone_weights: path/to/custom_resnet50_weights.ckpt
   model: faster_rcnn
-  experiment_id: Faster_RCNN_TPN_SAGIT22_C_4175_2022_05_27
+  experiment_id: Faster_RCNN_TPN_modHSV_SAGIT22_C_4175_2022_05_27
   max_epoch: 50
   use_pretrained: true  # Add this option to specify whether to use a pretrained backbone
   num_classes: 2 # One class for the background and one for the object

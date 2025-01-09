@@ -6,8 +6,8 @@ from pytorch_lightning import Trainer
 from pytorch_lightning import loggers as pl_loggers
 from pytorch_lightning.callbacks import ModelCheckpoint
 import yaml
-from dataset.field_data_module import FieldDataModule
-from models import faster_RCNN_FPN, deformable_DETR
+from object_detection.dataset.field_data_module import FieldDataModule
+from object_detection.models import faster_RCNN_FPN, deformable_DETR
 # Set the default precision for matrix multiplication to float32
 torch.set_float32_matmul_precision('medium')
 # Argument parser for the training script
@@ -55,7 +55,8 @@ def main(config, weights, checkpoint):
                       accelerator='gpu', 
                       logger=tb_logger, 
                       max_epochs=cfg['train']['max_epoch'], 
-                      callbacks=[checkpoint_saver])
+                      callbacks=[checkpoint_saver],
+                      precision=cfg['train']['precision'],)
     # Train the model
     trainer.fit(model, data)
 # Entry point of the script
